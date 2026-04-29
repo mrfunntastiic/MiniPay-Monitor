@@ -26,6 +26,18 @@ export const BALANCE_CONFIGS: BalanceConfig[] = [
       "https://celoscan.io/token/0xceba9300f2b948710d2653dd7b07f33a8b32118c?a=0x65cc602e616ca786bdb4bab00a6272060f0082fb",
   },
   {
+    id: "reward-us",
+    label: "Reward US (Dev)",
+    region: "US · Dev",
+    category: "reward",
+    tokenAddress: "0xceba9300f2b948710d2653dd7b07f33a8b32118c",
+    walletAddress: "0x74667d9eDD871150cE38EBC26355758ba31F44B5",
+    tokenSymbol: "USDC",
+    tokenDecimals: 6,
+    explorerUrl:
+      "https://celoscan.io/token/0xceba9300f2b948710d2653dd7b07f33a8b32118c?a=0x74667d9eDD871150cE38EBC26355758ba31F44B5",
+  },
+  {
     id: "deposit-usdt",
     label: "Deposit USDT",
     region: "Global",
