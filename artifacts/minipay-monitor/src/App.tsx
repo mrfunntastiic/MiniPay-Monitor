@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   QueryClient,
   QueryClientProvider,
@@ -14,7 +14,6 @@ import {
   Copy,
   Gift,
   RefreshCw,
-  ShieldCheck,
   Wallet,
   AlertTriangle,
 } from "lucide-react";
@@ -370,14 +369,6 @@ function Dashboard() {
   useTicker(1000);
   const now = Date.now();
 
-  const grandTotal = useMemo(() => {
-    return balances.reduce((sum, q) => {
-      const data = q.data as BalanceResult | undefined;
-      return sum + (data?.numeric ?? 0);
-    }, 0);
-  }, [balances]);
-
-  const allLoading = balances.every((q) => q.isLoading && !q.data);
   const anyFetching = balances.some((q) => q.isFetching) || blockQuery.isFetching;
   const lastUpdated = Math.max(
     0,
@@ -457,94 +448,6 @@ function Dashboard() {
             </div>
           </div>
         </header>
-
-        {/* Grand total */}
-        <motion.div
-          initial={{ opacity: 0, y: 12 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
-        >
-          <Card className="relative mb-10 overflow-hidden border-card-border bg-card/60 backdrop-blur-sm">
-            <div className="pointer-events-none absolute inset-0 bg-gradient-to-br from-primary/5 via-transparent to-accent/5" />
-            <div className="pointer-events-none absolute -right-20 -top-20 h-64 w-64 rounded-full bg-primary/10 blur-3xl" />
-            <CardContent className="relative px-6 py-8 md:px-10 md:py-10">
-              <div className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
-                <div className="space-y-3">
-                  <div className="flex items-center gap-2">
-                    <ShieldCheck className="h-3.5 w-3.5 text-primary" />
-                    <span className="text-[11px] uppercase tracking-[0.18em] text-muted-foreground">
-                      Total Across All Accounts
-                    </span>
-                  </div>
-                  {allLoading ? (
-                    <Skeleton className="h-14 w-72" />
-                  ) : (
-                    <div className="flex items-baseline gap-3">
-                      <span className="font-mono text-5xl font-semibold tracking-tight md:text-6xl">
-                        <AnimatedNumber value={grandTotal} fractionDigits={2} />
-                      </span>
-                      <span className="text-base font-medium text-muted-foreground">
-                        USD
-                      </span>
-                    </div>
-                  )}
-                  <p className="text-xs text-muted-foreground">
-                    Sum of {BALANCE_CONFIGS.length} on-chain balances · refreshes every 30s
-                  </p>
-                </div>
-
-                <div className="flex flex-col gap-3 md:items-end">
-                  <div className="grid grid-cols-2 gap-x-6 gap-y-1 text-xs">
-                    <span className="text-muted-foreground">Rewards</span>
-                    <span className="text-right font-mono tabular-nums">
-                      <AnimatedNumber
-                        value={rewards.reduce((s, cfg) => {
-                          const idx = BALANCE_CONFIGS.findIndex(
-                            (c) => c.id === cfg.id,
-                          );
-                          return (
-                            s +
-                            ((balances[idx]?.data as BalanceResult | undefined)
-                              ?.numeric ?? 0)
-                          );
-                        }, 0)}
-                      />
-                    </span>
-                    <span className="text-muted-foreground">Deposits</span>
-                    <span className="text-right font-mono tabular-nums">
-                      <AnimatedNumber
-                        value={deposits.reduce((s, cfg) => {
-                          const idx = BALANCE_CONFIGS.findIndex(
-                            (c) => c.id === cfg.id,
-                          );
-                          return (
-                            s +
-                            ((balances[idx]?.data as BalanceResult | undefined)
-                              ?.numeric ?? 0)
-                          );
-                        }, 0)}
-                      />
-                    </span>
-                  </div>
-                  <Button
-                    onClick={handleRefresh}
-                    disabled={anyFetching}
-                    size="sm"
-                    className="font-medium"
-                  >
-                    <RefreshCw
-                      className={cn(
-                        "mr-1.5 h-3.5 w-3.5",
-                        anyFetching && "animate-spin",
-                      )}
-                    />
-                    Refresh now
-                  </Button>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
-        </motion.div>
 
         {/* Sections */}
         <div className="space-y-12">
