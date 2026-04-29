@@ -4,6 +4,10 @@
 
 pnpm workspace monorepo using TypeScript. Each package manages its own dependencies.
 
+## Apps
+
+- **MiniPay Balance Monitor** (`artifacts/minipay-monitor`) — React + Vite dashboard for monitoring MiniPay reward & deposit balances on Celo. Reads ERC20 balances directly from `forno.celo.org` (no API key, no backend). Account/token configs live in `src/lib/balances.ts`.
+
 ## Stack
 
 - **Monorepo tool**: pnpm workspaces
