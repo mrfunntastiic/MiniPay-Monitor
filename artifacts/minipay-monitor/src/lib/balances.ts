@@ -15,8 +15,8 @@ export type BalanceConfig = {
 export const BALANCE_CONFIGS: BalanceConfig[] = [
   {
     id: "reward-europe",
-    label: "Reward Europe",
-    region: "Europe",
+    label: "Reward Europe (Dev)",
+    region: "Europe · Dev",
     category: "reward",
     tokenAddress: "0xceba9300f2b948710d2653dd7b07f33a8b32118c",
     walletAddress: "0x65cc602e616ca786bdb4bab00a6272060f0082fb",
